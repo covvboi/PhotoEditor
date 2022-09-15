@@ -1,0 +1,212 @@
+// .card_header{
+//     text-align: center;
+//     padding-bottom: 15px;
+//     h2{
+//         text-transform: uppercase;
+//         color: rgb(15, 15, 87)
+//     }
+// }
+
+.image_editor{
+    width: 100vw;
+    height: 100vh;
+    background-color: #e1e6ef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .card{
+        border-radius: 5px;
+        padding: 28px;
+        width: 800px;
+        height: 94%;
+        background-color: #fff;
+        box-shadow: 0 8px 16px 0px rgb(201,201,201);
+        .card_body{           
+            display: flex;
+            justify-content: center;
+            .sidebar{
+                span{
+                    font-size: 15px;
+                    color: #404040;
+                    margin-bottom: 4px;
+                    display: block;
+                    cursor: pointer;
+                }
+                .side_body{
+                    border-radius: 5px;
+                    width: 750px;
+                    border: 1px solid #c3c5c4;
+                    margin-right: 8px;
+                    height: 130px;   //옆에 메뉴바 길이 늘리는 부분
+                    padding: 10px;
+                    .filter_key{
+                        display: grid;
+                        grid-template-columns: repeat(6, 1fr);
+                        grid-gap: 8px;
+                        button.active{
+                            background-color: rgb(42, 50, 153);
+                            color: #fff;
+                        }
+                        button{
+                            padding: 8px;
+                            background-repeat: 3px;
+                            border: 1px solid #dad7d7;
+                            cursor: pointer;
+                            color: #404040;
+                            border-radius: 5px;
+                            text-transform: capitalize;
+                        }
+                        
+                    }
+                    .filter_slider{
+                        margin: 8px 0px;
+                        .label_bar{
+                            margin-bottom: 4px;
+                            display: flex;
+                            justify-content: space-between;
+                            label,span{
+                                color: #404040;
+                                font-size: 15px;
+                                text-transform: capitalize;
+                            }
+                        }
+                        input{
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+            .image_section{
+                margin-left: 2.5%;
+                width: 700px;
+                background-color: #f0f0f0;
+                height: 440px;
+                margin-top: 10px;
+                .image{
+                    width: 60%;
+                    height: 100%;
+                    display: flex;
+                    margin-left: 21%;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden;
+                    img{
+                        object-fit: scale-down;
+                        transition: all .5s;
+                        width: 100%;
+                        height: 100%;                    
+                    }
+                    label{
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        border: dotted;
+                        border-color: #c5c9c5;
+                        cursor: pointer;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        svg{ //로고
+                            font-size: 40px;
+                            color: #b4acac;
+                        }
+                        span{ //로고 아래 text
+                            color: #b4acac;
+                        }
+                    }
+                }
+                .image_select{
+                    margin: 0px 0px;
+                    display: flex;
+                    justify-content: flex-end;
+                    input{
+                        display: none;
+                    }
+                    label,button{
+                        padding: 8px;
+                        border-radius: 3px;
+                        outline: none;
+                        border: 1px solid #dad7d7;
+                        cursor: pointer;
+                        color: #fff;
+                        font-weight: 350;
+                        text-transform: capitalize;
+                        font-size: 15px;
+                    }
+                    // .redo, .undo{
+                    //     background-color: #4a55f3;
+                    //     margin-left: 5px;
+                    //     color: #fff;
+                    //     padding: 5px 10px;
+                    //     font-size: 18px;
+                    // }
+                    label{
+                        background-color: #0a75ad;
+                        margin-left: 5px;
+                        border-radius: 5px;
+                        
+                    }
+                    // .crop{
+                    //     background-color: rgb(15, 15, 87);
+                    //     margin-left: 5px;
+                    // }
+                }
+                .rotate{   // 이미지 회전 부분
+                    label {
+                        margin-bottom: 8px;
+                        display: block;
+                        font-size: 15px;
+                        color: #404040;
+                    }
+                    .icon{
+                        margin-top: 10px;
+                        display: grid;
+                        grid-template-columns: repeat(4, 1fr);
+                        grid-gap: 10px;
+                        div{
+                            border-radius: 5px;
+                            border: 1px solid rgb(179, 194, 194);
+                            padding: 8px 5px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            cursor: pointer;
+                        }
+                    }              
+                }
+
+
+                .reset{
+                    margin-top: 15px;
+                    .save{
+                        background-color: #008000 !important;
+                        margin-left: 5px;
+                        border-radius: 5px;
+
+                    }
+                    .crop{
+                        background-color: #0e2f44;
+                        margin-left: 5px;
+                        border-radius: 5px;
+
+                    }
+                    button{
+                        background-color: grey;
+                        padding: 8px;
+                        border-radius: 3px;
+                        outline: none;
+                        border: 1px solid #dad7d7;
+                        cursor: pointer;
+                        color: #fff;
+                        font-weight: 350;
+                        text-transform: capitalize;
+                        font-size: 15px;
+                    }
+                }
+
+
+            }
+         
+    }
+}
