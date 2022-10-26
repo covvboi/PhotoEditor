@@ -1,0 +1,137 @@
+
+.card_body{
+    display: flex;
+    justify-content: center;
+    width: 700px;
+    height: 440px;
+    margin-left: 2%;
+    background-color: #f0f0f0;
+    overflow: hidden;
+    position: relative;
+
+}
+
+/* .canvas{
+    display: flex;
+    justify-content: center;
+    border: 3px solid grey;
+    background-color: white;
+    width: 430px;
+    height: 434px;
+    border: dotted;
+    border-color: #c5c9c5;
+
+    margin-left: 64%;
+    이부분 벗겨라
+
+} */
+
+.canvas{
+    position: absolute;
+    /* overflow: hidden; */
+    transition: all .5s;
+    object-fit: scale-down;
+    top: 4%;
+    left: 22%;
+    transform: translate(-50%, -100%);
+    border: 2px solid #000;
+}
+
+.test_crop_canvas{
+    /* overflow: hidden; */
+
+    position: absolute;
+    transition: all .5s;
+    object-fit: scale-down;
+    top: 4%;
+    left: 22%;
+    transform: translate(-50%, -100%);
+    border: 2px solid rgb(56, 44, 160);
+}
+
+
+.test_crop_canvas1{
+    /* display: flex; */
+    /* justify-content: center; */
+    border: 3px solid rgb(119, 26, 26);
+    width: 430px;
+    height: 433px;
+    /* top: 50%; */
+    /* left: 50%; */
+    transform: translate(-100%, 00%);
+
+}
+
+.filter_span{
+    font-size: 15px;
+}
+.filter_key{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 8px;
+}
+
+.filter_slider{
+    margin: 8px 0px;
+}
+
+.label_bar{
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+button.active{
+    background-color: rgb(42, 50, 153);
+    color: #fff;
+}
+button{
+    padding: 8px;
+    background-repeat: 3px;
+    border: 1px solid #dad7d7;
+    cursor: pointer;
+    color: #404040;
+    border-radius: 5px;
+    text-transform: capitalize;
+}
+.filter_button_after{
+    background-repeat: 3px;
+    border: 1px solid #dad7d7;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: capitalize;
+    background-color: rgb(42, 50, 153);
+    color: #fff;
+
+}
+.filter_range{
+    width: 100%;
+}
+
+.rotate{
+    margin-bottom: 8px;
+    display: block;
+    font-size: 15px;
+    color: #404040;
+    margin-left: 1px;
+}
+.icon{
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+.rotate_btn{
+    border-radius: 5px;
+    border: 1px solid rgb(179, 194, 194);
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn_group{
+    display: flex;
+
+}
