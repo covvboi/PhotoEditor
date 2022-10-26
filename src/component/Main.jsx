@@ -185,7 +185,7 @@ const Main = () => {
 
                             <div className="filter_slider">
                                 <div className="label_bar">
-                                    <label htmlFor="range">감둥조절</label>
+                                    <label htmlFor="range">감도도조절</label>
                                     <span>100%</span>
                                 </div>
                                 <input name={property.name} onChange={inputHandle} value={state[property.name]} max={property.maxValue} type="range" />
