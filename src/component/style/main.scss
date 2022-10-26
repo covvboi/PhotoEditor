@@ -91,6 +91,13 @@
                     justify-content: center;
                     align-items: center;
                     overflow: hidden;
+                    canvas{
+                        border: 2px solid rgb(56, 34, 153);
+                        border: dotted;
+                        border-color: #c5c9c5;
+
+
+                    }
                     img{
                         object-fit: scale-down;
                         transition: all .5s;

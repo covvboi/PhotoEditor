@@ -137,6 +137,8 @@ const Main = () => {
 
         ctx.filter = `brightness(${state.밝은}%) brightness(${state.밝은}%) grayscale(${state.어두운}%) sepia(${state.빛바랜}%) saturate(${state.선명한}%) contrast(${state.대비된}%) hue-rotate(${state.색전환}deg)`
 
+        
+
         ctx.translate(canvas.width / 2, canvas.height / 2)
         ctx.rotate(state.rotate * Math.PI / 180)
         ctx.scale(state.vartical, state.horizontal)
@@ -153,6 +155,7 @@ const Main = () => {
         link.download = 'image_edit.jpg'
         link.href = canvas.toDataURL()
         link.click()
+        console.log(details)
     }
     
     
@@ -182,7 +185,7 @@ const Main = () => {
 
                             <div className="filter_slider">
                                 <div className="label_bar">
-                                    <label htmlFor="range">감도조절</label>
+                                    <label htmlFor="range">감둥조절</label>
                                     <span>100%</span>
                                 </div>
                                 <input name={property.name} onChange={inputHandle} value={state[property.name]} max={property.maxValue} type="range" />
@@ -199,10 +202,8 @@ const Main = () => {
                                     <div onClick={RightRotate}><GrRotateRight/></div>
                                     <div onClick={varticalFlip}><CgMergeVertical/></div>
                                     <div onClick={horizontalFlip}><CgMergeHorizontal/></div>
-
                                 </div>
                             </div>
-
                         <div className="reset">
                             <button onClick={()=>{setDetails(null)}}>Reset</button>
                             <button onClick={saveImage} className="save">Save Image</button>
@@ -259,10 +260,8 @@ const Main = () => {
                                     <div onClick={RightRotate}><GrRotateRight/></div>
                                     <div onClick={varticalFlip}><CgMergeVertical/></div>
                                     <div onClick={horizontalFlip}><CgMergeHorizontal/></div>
-
                                 </div>
                             </div>
-
                             <div className="reset">
                                 <button onClick={()=>{setDetails(null)}}>Reset</button>
                                 <button onClick={saveImage} className="save">Save Image</button>
