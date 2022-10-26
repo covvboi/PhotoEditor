@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import './style/main.scss'
 import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import {GrRotateLeft, GrRotateRight} from "react-icons/gr"
 import {CgMergeVertical, CgMergeHorizontal} from "react-icons/cg"
-import {IoMdUndo, IoMdRedo, IoIosImage} from "react-icons/io"
+import { IoIosImage} from "react-icons/io"
 import { BsFilterLeft } from 'react-icons/bs';
 
 const filterElement = [
@@ -185,7 +185,7 @@ const Main = () => {
 
                             <div className="filter_slider">
                                 <div className="label_bar">
-                                    <label htmlFor="range">감도도조절</label>
+                                    <label htmlFor="range">감동조조</label>
                                     <span>100%</span>
                                 </div>
                                 <input name={property.name} onChange={inputHandle} value={state[property.name]} max={property.maxValue} type="range" />
