@@ -168,7 +168,7 @@ const CanvasTest = () => {
 
             contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
-            ctx.drawImage(image, startX.current, startY.current, rectWidth, rectHeight, 0, 0, rectWidth, rectHeight);
+            ctx.drawImage(image, startX.current, startY.current, rectWidth, rectHeight, startX.current, startY.current, rectWidth, rectHeight);
             ctx.save();
 
             console.log(ctx);
