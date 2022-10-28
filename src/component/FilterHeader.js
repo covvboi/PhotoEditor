@@ -1,61 +1,49 @@
-import { useEffect, useRef, useState } from 'react';
+// import { useEffect, useRef, useState } from 'react';
 import '../style/main.css'
 import { BsFilterLeft } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { slideHandle, blankStart, SlideStart, slideHandle2 } from '../store.js';
+import { slideHandle, blankStart  } from '../store.js';
 
 
 
 const filterElement = [
     {
-        name: '밝은',  //brightness
+        name: 'brightness',  //brightness
         maxValue: 200
     },
     {
-        name: '어두운',  //grayscale
+        name: 'grayscale',  //grayscale
         maxValue: 200
     },
     {
-        name: '빛바랜',  //sepia
+        name: 'sepia',  //sepia
         maxValue: 200
     },
     {
-        name: '선명한',  //seturate
+        name: 'saturate',  //saturate
         maxValue: 200
     },
     {
-        name: '대비된',  //contrate
+        name: 'contrast',  //contrast
         maxValue: 200
     },
     {
-        name: '색전환'  //hueRotate
+        name: 'huerotate'  //hueRotate
     }
 ];
+
+
 
 const FilterHeader = () => {
 
     let state = useSelector((state) => { return state.DefaultSetting })
-    let abc = useSelector((abc) => { return abc.StartSet })
+    let start = useSelector((start) => { return start.StartSet })
     let dispatch = useDispatch()
 
     console.log(state);
-    console.log(state[abc.name]);
-
-    const [property, setProperty] = useState(
-        {
-            name: '밝은',
-            maxValue: 200
-        }
-    )
-
-    // const clickFilter =  (e) => {
-    //     dispatch(blankStart(e))
-    // }
-
-    const [testState, setTestState] = useState(
+    console.log(state[start.name]);
 
 
-    )
 
     const inputHandle = (filter, e) => {
         console.log(filter, e);
@@ -66,26 +54,18 @@ const FilterHeader = () => {
                 value: e.target.value
             }
         ))
-
-
     }
-    //     console.log('tqtqtqt');
-    //     console.log(abc);
-    //     console.log(abc.name);
-    //     console.log("/");
-    //     console.log(property.name);
-    //     console.log(state[abc.name]);
 
     return (
         <>
             <div className="filter_section">
                 <BsFilterLeft />
-                <span className='filter_span'>필터</span>
+                <span className='filter_span'>Filter</span>
                 <div className='filter_key'>
                     {
 
                         filterElement.map((a, i) =>
-                            <button className={abc.name === a.name ? 'active' : ''}
+                            <button className={start.name === a.name ? 'active' : ''}
                                 onClick={() => { dispatch(blankStart(a)) }}
                                 key={i}>
                                 {a.name}
@@ -95,17 +75,15 @@ const FilterHeader = () => {
                     }
                 </div>
 
-                {/* <h4>{abc.maxValue}</h4>
-            <button onClick={()=>{dispatch(blankStart(2))}}>+</button>
-             */}
+            
             </div>
 
             <div className="filter_slider">
                 <div className='label_bar'>
-                    <label className='filter_span' htmlFor='range'>감도조절</label>
+                    <label className='filter_span' htmlFor='range'>Sensitivity</label>
                     <span className='filter_span'>100%</span>
                 </div>
-                <input name={abc.name} onChange={(e) => inputHandle(abc, e)} value={state[abc.name]} max={abc.maxValue} className='filter_range' type='range'></input>
+                <input name={start.name} onChange={(e) => inputHandle(start, e)} value={state[start.name]} max={start.maxValue} className='filter_range' type='range'></input>
             </div>
         </>
     )

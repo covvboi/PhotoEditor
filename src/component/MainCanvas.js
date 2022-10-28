@@ -60,11 +60,8 @@ const CanvasTest = () => {
         canvasOffSetY.current = canvasOffSet.top;  //현재 요소의 top 위치
 
 
-
-
-
     }, []);
-    //////////////////
+
 
 
 
@@ -158,7 +155,6 @@ const CanvasTest = () => {
 
         const ctx = canvas.getContext('2d');
 
-
         const rectWidth = newMouseX - startX.current;
         const rectHeight = newMouseY - startY.current;
 
@@ -210,6 +206,9 @@ const CanvasTest = () => {
         console.log(state);
     }
 
+
+    // 밝은 - brightness ,어두운 - grayscale, 빛바랜 - sepia, 선명한 - saturate, 대비된 - contrast, 색전환 - hueRotate
+
     return (
         <div>
             <div className='card_body'>
@@ -217,7 +216,7 @@ const CanvasTest = () => {
                     ref={canvasRef}
                     width={MAX_CANVAS_WIDTH}
                     height={MAX_CANVAS_HEIGHT}
-                    style={{ filter: `brightness(${state.밝은}%) grayscale(${state.어두운}%) sepia(${state.빛바랜}%) saturate(${state.선명한}%) contrast(${state.대비된}%) hue-rotate(${state.색전환}deg)`, transform: `rotate(${state.rotate}deg) scale(${state.vartical},${state.horizontal})` }}
+                    style={{ filter: `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`, transform: `rotate(${state.rotate}deg) scale(${state.vartical},${state.horizontal})` }}
 
                     alt=""
 
