@@ -31,10 +31,12 @@
     /* overflow: hidden; */
     transition: all .5s;
     object-fit: scale-down;
-    top: 4%;
-    left: 22%;
-    
-    
+    /* top: 4%; */
+    /* left: 52%; */
+    /* display: inline */
+    /* text-align: center; */
+    justify-content: center;
+    /* margin-top: 20px; */
     transform: translate(-50%, -100%);
     border: 2px solid #000;
 }
@@ -45,8 +47,8 @@
     position: absolute;
     transition: all .5s;
     object-fit: scale-down;
-    top: 4%;
-    left: 22%;
+    /* top: 4%; */
+    /* left: 22%; */
     transform: translate(-50%, -100%);
     border: 2px solid rgb(56, 44, 160);
 }
