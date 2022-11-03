@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { urlHandle } from '../store.js';
+
+import { IoIosImage } from "react-icons/io"
+
+
 // import  CropFuntion  from './CropFuntion'
 
 
@@ -41,7 +45,6 @@ const CanvasTest = () => {
     const [canvasImage, setCanvasImage] = useState('');
 
 
-
     useEffect(() => {
 
         const canvas = cropCanvasRef.current;
@@ -54,22 +57,10 @@ const CanvasTest = () => {
         context.strokeStyle = 'red';
         context.lineWidth = 1;
         contextRef.current = context;
-        // context.save();
-
-        // context.translate(5, 5);	
-        // context.rotate(state.rotate * Math.PI / 180)
-        // context.translate(-5, -5);	
-        // ctx.rotate(state.rotate * Math.PI / 180)
-
-
-        
-
 
         const canvasOffSet = canvas.getBoundingClientRect(); //현재 엘리먼트 요소찾는법 
         canvasOffSetX.current = canvasOffSet.left;  //현재 요소의 왼쪽위치 
         canvasOffSetY.current = canvasOffSet.top;  //현재 요소의 top 위치
-
-
 
     }, []);
 
@@ -84,7 +75,6 @@ const CanvasTest = () => {
 
         reader.onloadend = (event) => {
 
-            // const image = new Image();
             image.onload = () => {
 
                 // const width = image.width > image.height
@@ -101,30 +91,26 @@ const CanvasTest = () => {
 
                 // ctx.drawImage(image, 0,0, width, height)
 
-
+                //
                 var wrh = image.width / image.height;
                 var newWidth = canvas.width;
                 var newHeight = newWidth / wrh;
+
                 if (newHeight > canvas.height) {
                             newHeight = canvas.height;
-                    newWidth = newHeight * wrh;
+                            newWidth = newHeight * wrh;
                 }
+
                 var xOffset = newWidth < canvas.width ? ((canvas.width - newWidth) / 2) : 0;
                 var yOffset = newHeight < canvas.height ? ((canvas.height - newHeight) / 2) : 0;
         
                 ctx.drawImage(image, xOffset, yOffset, newWidth, newHeight)
-
-
-
+                //
 
                 console.log(image);
 
-                // ctx.scale(3,3)
-
                 var imageData = canvas.toDataURL('image/jpg');
                 setCanvasImage(imageData);
-                // console.log(imageData);
-                // console.log(state);
 
                 dispatch(urlHandle(
                     reader.result
@@ -133,6 +119,7 @@ const CanvasTest = () => {
             };
             image.src = event.target.result;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
             
 
         };
@@ -148,10 +135,6 @@ const CanvasTest = () => {
         
         startX.current = nativeEvent.clientX - canvasOffSetX.current;
         startY.current = nativeEvent.clientY - canvasOffSetY.current;
-        
-        // const canvas = cropCanvasRef.current;
-        // const context = canvas.getContext('2d');
-        // context.rotate(( Math.PI / 180)*25)
 
 
         setIsDrawing(true);
@@ -200,28 +183,26 @@ const CanvasTest = () => {
         const rectHeight = newMouseY - startY.current;
 
         // const img = new Image();
-        image.onload = () => {
+            image.onload = () => {
 
-            // const canvas = imageLayer.current;
-            // const ctx = canvas.getContext('2d');
-            canvas.width = rectWidth;
-            canvas.height = rectHeight;
+                // const canvas = imageLayer.current;
+                // const ctx = canvas.getContext('2d');
 
-            contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+                // canvas.width = rectWidth;
+                // canvas.height = rectHeight;
 
-            ctx.drawImage(image, startX.current, startY.current, rectWidth, rectHeight, 0, 0, rectWidth, rectHeight);
-            ctx.save();
-            // ctx.textAlign = "center";  
+                contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+                // ctx.drawImage(image, startX.current, startY.current, rectWidth, rectHeight, 0, 0, rectWidth, rectHeight);
+                ctx.drawImage(image, startX.current, startY.current, rectWidth, rectHeight, startX.current, startY.current, rectWidth, rectHeight);
 
-            console.log(ctx);
+                ctx.save();
+                // ctx.textAlign = "center";  
 
-        }
+                console.log(ctx);
+            }
         image.src = canvas.toDataURL();
         console.log(image.src);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        
-        // ctx.clearRect(0, 0, canvas.width, canvas.height);
         // console.log(startX.current,startY.current,rectWidth,rectHeight);
 
     }
@@ -238,8 +219,8 @@ const CanvasTest = () => {
         ctx.translate(canvas.width / 2, canvas.height / 2)
         ctx.rotate(state.rotate * Math.PI / 180)
         ctx.scale(state.vartical, state.horizontal)
-        ctx.save();
         // ctx.drawImage(image, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+        ctx.save();
 
         const link = document.createElement('a');
         link.download = 'image_edit.jpg'
@@ -248,15 +229,14 @@ const CanvasTest = () => {
 
         console.log(state);
     }
-
-
+    
     // 밝은 - brightness ,어두운 - grayscale, 빛바랜 - sepia, 선명한 - saturate, 대비된 - contrast, 색전환 - hueRotate
 
     return (
         <div>
 
-
             <div className='card_body'>
+
                     <canvas className='canvas'
                     ref={canvasRef}
                     width={MAX_CANVAS_WIDTH}
@@ -264,7 +244,6 @@ const CanvasTest = () => {
                     style={{ filter: `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`, transform: `rotate(${state.rotate}deg) scale(${state.vartical},${state.horizontal})` }}
                     alt="" />
             
-
                     <canvas className="test_crop_canvas"
                     ref={cropCanvasRef}
                     style={{ transform: `rotate(${state.rotate}deg) scale(${state.vartical},${state.horizontal})` }}
@@ -273,18 +252,23 @@ const CanvasTest = () => {
                     onMouseUp={stopDrawingRectangle}
                     onMouseLeave={stopDrawingRectangle}
                 />
-
-
+        
             </div>
 
+
             <div className='btn_group'>
-                <input type="file" onChange={ImageHandler}></input>
-                <input type='button' value='crop' onClick={imageCrop} ></input>
-                <input type='button' value='save' onClick={saveImage}></input>
-                {/* <button onClick={saveImage} className="save">저장하기</button> */}
 
+                    <label htmlFor='choose'>
+                        <span className='import_image'>
+                            Choose Image
+                        </span>
+                    </label>
 
+                <input className='import_btn' type="file" id='choose' onChange={ImageHandler}></input>
 
+                <input type='button' className='crop_btn' value='Crop' onClick={imageCrop}></input>
+
+                <input type='button' className='save_btn' value='Save' onClick={saveImage}></input>
             </div>
 
 

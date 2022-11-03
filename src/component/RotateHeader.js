@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
 import {GrRotateLeft, GrRotateRight} from "react-icons/gr"
 import {CgMergeVertical, CgMergeHorizontal} from "react-icons/cg"
 import '../style/main.css'
+import '../App.css';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { leftRotateHandle, rightRotateHandle, varticalFlipHandle, horizontalFlipHandle } from '../store.js';
 
-const RotateFooter = () => {
+const RotateHeader = () => {
 
     let state = useSelector((state)=>{ return state.DefaultSetting })
     let dispatch = useDispatch();
@@ -52,4 +53,4 @@ const RotateFooter = () => {
     )
 }
 
-export default RotateFooter;
+export default RotateHeader;

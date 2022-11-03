@@ -12,9 +12,11 @@
         border-radius: 5px;
         padding: 28px;
         width: 730px;
-        height: 80%;
+        height: 75%;
         background-color: #fff;
         box-shadow: 0 8px 16px 0px rgb(201,201,201);
+        overflow: hidden;
+    
 }
 .top_body{
     border-radius: 5px;
@@ -27,4 +29,3 @@
 
     
 }
-
