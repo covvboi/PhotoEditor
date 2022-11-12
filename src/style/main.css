@@ -2,46 +2,32 @@
 .card_body{
     display: flex;
     justify-content: center;
-    width: 700px;
-    height: 440px;
-    margin-left: 2%;
+    align-items: center;
+    /* width: 700px; */
+    min-height: 440px;
+    height: 700px;
+    /* margin-left: 2%; */
     background-color: #f0f0f0;
     overflow: hidden;
     position: relative;
-    margin-top: 60px;
+    margin-top: 20px;
 
 }
-
-/* .canvas{
-    display: flex;
-    justify-content: center;
-    border: 3px solid grey;
-    background-color: white;
-    width: 430px;
-    height: 434px;
-    border: dotted;
-    border-color: #c5c9c5;
-
-    margin-left: 64%;
-    이부분 벗겨라
-
-} */
 
 .canvas{
     position: absolute;
     /* overflow: hidden; */
     transition: all .5s;
-    object-fit: scale-down;
-    top: 4%;
+    /* object-fit: scale-down; */
     /* left: 52%; */
     /* display: inline */
     /* text-align: center; */
     justify-content: center;
     /* margin-top: 20px; */
     transform: translate(-50%, -100%);
-    border: 2px solid #000;
+    /* border: 2px solid #000; */
 
-    border: dotted;
+    border: 2px dotted;
     border-color: #c5c9c5;
 
 }
@@ -51,8 +37,8 @@
 
     position: absolute;
     transition: all .5s;
-    object-fit: scale-down;
-    top: 4%;
+    /* object-fit: scale-down; */
+    /* top: 14%; */
     /* left: 22%; */
     transform: translate(-50%, -100%);
     border: 2px solid rgb(56, 44, 160);
@@ -118,11 +104,9 @@ button{
 }
 
 .rotate{
-    /* margin-bottom: px; */
     display: grid;
     font-size: 15px;
     color: #404040;
-    /* margin-left: px; */
 }
 .icon{
     margin-top: 13px;
@@ -142,9 +126,9 @@ button{
 
 .btn_group{
     display: flex;
-    margin-top: 10px;
-    float: right;
-    margin-right: 13px;
+    margin-top: 20px;
+    /* float: right; */
+    /* margin-right: 13px; */
 }
 
 .save_btn{
@@ -168,7 +152,7 @@ button{
     border: 1px solid #2c6d96;
     color: #2c6d96;
     cursor: pointer;
-    margin-left: 5px;
+    /* margin-left: 5px; */
     border-radius: 5px;
     width: 80px;
 }
@@ -184,7 +168,7 @@ button{
 }
 
 .import_image{
-    margin-right: 420px;
+    margin-right: 450px;
     display: flex;
     cursor: pointer;
     border-radius: 5px;

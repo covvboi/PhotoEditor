@@ -12,7 +12,7 @@ function App() {
 
         <div className="top_body">
           <FilterHeader></FilterHeader>
-        <RotateHeader></RotateHeader>
+          {/* <RotateHeader></RotateHeader> */}
         </div>
         {/* <div className="rotate_header">
         </div> */}
