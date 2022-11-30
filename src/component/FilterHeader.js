@@ -59,8 +59,13 @@ const FilterHeader = () => {
     return (
         <>
             <div className="filter_section">
+                <div className="filter_container">
+                <div className='filter_filter_span'>
                 <BsFilterLeft />
-                <span className='filter_span'>Filter</span>
+                </div>
+                <span className='filter_filter_span'>Filter</span>
+                </div>
+
                 <div className='filter_key'>
                     {
 

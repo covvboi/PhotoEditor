@@ -1,16 +1,54 @@
+.size_alert{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    /* display: none; */
+
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2;
+
+}
+
+.size_alert_body{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    
+
+    /* width: 400px; */
+    /* height: 400px; */
+
+    /* padding: 40px; */
+
+    text-align: center;
+    color: white;
+    
+    /* background-color: rgb(255, 255, 255); */
+    /* border-radius: 10px; */
+    /* box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15); */
+
+    transform: translateX(-50%) translateY(-50%);
+}
+
 
 .card_body{
     display: flex;
     justify-content: center;
     align-items: center;
     /* width: 700px; */
-    min-height: 440px;
-    height: 700px;
+    min-height: 430px;
+    height: 430px;
     /* margin-left: 2%; */
     background-color: #f0f0f0;
     overflow: hidden;
     position: relative;
-    margin-top: 20px;
+    margin-top: 10px;
+    
 
 }
 
@@ -24,7 +62,7 @@
     /* text-align: center; */
     justify-content: center;
     /* margin-top: 20px; */
-    transform: translate(-50%, -100%);
+    /* transform: translate(-50%, -100%); */
     /* border: 2px solid #000; */
 
     border: 2px dotted;
@@ -40,7 +78,7 @@
     /* object-fit: scale-down; */
     /* top: 14%; */
     /* left: 22%; */
-    transform: translate(-50%, -100%);
+    /* transform: translate(-50%, -100%); */
     border: 2px solid rgb(56, 44, 160);
 }
 
@@ -57,17 +95,45 @@
 
 }
 
-.filter_span{
-    font-size: 15px;
+.filter_container{
+    position: flex;
+    
 }
+
+.filter_section{
+    margin-top: -5px;
+}
+
+.rotate_text{
+    color: black;
+    margin-top: 18px;
+    margin-bottom: -10px;
+}
+
+.filter_span{
+    font-size: 10px;
+    
+    /* margin-bottom: 10px; */
+}
+.filter_filter_span{
+    font-size: 10px;
+    display: inline-block;
+    margin: 1px;
+    justify-content: space-around;
+    
+
+}
+
 .filter_key{
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 8px;
+    margin-top: 5px;
 }
 
 .filter_slider{
     margin: 8px 0px;
+    margin-top: 10px;
 }
 
 .label_bar{
@@ -80,6 +146,7 @@ button.active{
     color: #fff;
 }
 button{
+    font-size: 10px;
     padding: 8px;
     background-repeat: 3px;
     border: 1px solid #dad7d7;
@@ -104,8 +171,9 @@ button{
 }
 
 .rotate{
+    margin-top: -5px;
     display: grid;
-    font-size: 15px;
+    font-size: 10px;
     color: #404040;
 }
 .icon{
@@ -126,7 +194,7 @@ button{
 
 .btn_group{
     display: flex;
-    margin-top: 20px;
+    margin-top: 13px;
     /* float: right; */
     /* margin-right: 13px; */
 }
@@ -138,7 +206,9 @@ button{
     color: #008000;
     margin-left: 5px;
     border-radius: 5px;
-    width: 80px;
+    width: 70px;
+    font-size: 10px;
+
 
 }
 .save_btn:hover{
@@ -154,7 +224,9 @@ button{
     cursor: pointer;
     /* margin-left: 5px; */
     border-radius: 5px;
-    width: 80px;
+    width: 70px;
+    font-size: 10px;
+
 }
 .crop_btn:hover{
     color: white;
@@ -168,13 +240,14 @@ button{
 }
 
 .import_image{
-    margin-right: 450px;
+    user-select: none;
+    margin-right: 300px;
     display: flex;
     cursor: pointer;
     border-radius: 5px;
     border: 1px solid rgb(139, 143, 143);
     color: rgb(139, 143, 143);
-    font-size: 15px;
+    font-size: 10px;
     padding: 7px;
 
 

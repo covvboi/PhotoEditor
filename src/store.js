@@ -26,22 +26,22 @@ let DefaultSetting = createSlice({   // useState() 역할 이걸 slice라고 부
         urlHandle(state, action) {
             console.log(action);
             state.image = action.payload
-        },
-        leftRotateHandle(state, action) {
-            console.log(action);
-            state.rotate = action.payload
-        },
-        rightRotateHandle(state, action) {
-            console.log(action);
+        }
+        // leftRotateHandle(state, action) {
+        //     console.log(action);
+        //     state.rotate = action.payload
+        // },
+        // rightRotateHandle(state, action) {
+        //     console.log(action);
 
-            state.rotate = action.payload
-        },
-        varticalFlipHandle(state, action) {
-            state.vartical = action.payload
-        },
-        horizontalFlipHandle(state, action) {
-            state.horizontal = action.payload
-        },
+        //     state.rotate = action.payload
+        // },
+        // varticalFlipHandle(state, action) {
+        //     state.vartical = action.payload
+        // },
+        // horizontalFlipHandle(state, action) {
+        //     state.horizontal = action.payload
+        // },
 
     }
 })
