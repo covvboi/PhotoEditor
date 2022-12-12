@@ -468,7 +468,7 @@ const CanvasTest = () => {
 
                 <label htmlFor='choose'>
                     <span className='import_image'>
-                        Choose Image2
+                        Choose Image
                         </span>
                 </label>
 
