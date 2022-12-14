@@ -1,6 +1,6 @@
 #  Photo Editor
 
-> PhotoEditor는 라이브러리를 사용하지 않고 자바스크립트와 HTML의 핵심 기능을 최대한 살려 구현해본 저의 Frontend 프로젝트입니다.
+> PhotoEditor는 라이브러리를 사용하지 않고 JavaScript와 HTML의 핵심 기능을 최대한 살려 구현해본 저의 Frontend 프로젝트입니다.
 
 ##  1.구현화면 
 
