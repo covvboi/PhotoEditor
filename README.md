@@ -36,7 +36,6 @@
 
 
 <img width="30.6%"  align="center" src="https://user-images.githubusercontent.com/89898165/208044782-f208d9da-0e12-43ee-a69c-5f50ee207631.jpeg"/>
-<br>
 
 canvas에서 rotate를 할때는 위의 사진처럼 원점(0,0)을 기준으로 회전을 하기때문에 사용자가 보는 화면에서 이미지가 벗어날 수 있다.<br>
 때문에 회전을 하고 다시 가운데로 이동을 시켜주는 작업을 따로 했습니다.
