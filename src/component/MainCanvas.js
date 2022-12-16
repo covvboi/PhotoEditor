@@ -1,43 +1,41 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { urlHandle } from '../store.js';
-import { IoIosImage } from "react-icons/io"
 import '../style/main.css'
-
 
 import { GrRotateLeft, GrRotateRight } from "react-icons/gr"
 import { CgMergeVertical, CgMergeHorizontal } from "react-icons/cg"
+
 // var newMouseX, newMouseY
 
 // const MAX_CANVAS_WIDTH = 410;
 // const MAX_CANVAS_HEIGHT = 400;
 
-
-// const image = new Image();
-
-
 const CanvasTest = () => {
-
 
     /////////////////
     const cropCanvasRef = useRef(null);
-    // const contextRef = useRef(null);
 
     const [scale, setScale] = useState(1);
-    const [cropScale, setCropScale] = useState(1);
-
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
-
     const [canvasTop, setCanvasTop] = useState(0);
 
     let cropModel = null;
 
     let state = useSelector((state) => { return state.DefaultSetting })
+
     let dispatch = useDispatch()
 
     const canvasRef = useRef(null);
     const cardBodyRef = useRef(null);
+
+    
+    // brightness
+    let brightness = 
+        `brightness(${state.brightness}%)`;
+
+    let sepia = 
+        `sepia(1)`;
 
 
 
@@ -48,12 +46,15 @@ const CanvasTest = () => {
         const ctx = canvas.getContext('2d');
         const reader = new FileReader();
 
+
+        
         
 
-
-
+        
         reader.onloadend = (event) => {
+            
             image.onload = () => {
+                
                 setWidth(image.naturalWidth);
                 setHeight(image.naturalHeight);
                 setTimeout(() => {
@@ -63,15 +64,18 @@ const CanvasTest = () => {
                         0,
                         image.naturalWidth,
                         image.naturalHeight
-                    );
-
-
+                        );
+                        
+                    // ctx.filter = sepia
+                    // ctx.translate(canvas.width / 2, canvas.height / 2);   
+                    // ctx.drawImage(image, -image.width / 2 , -image.height/ 2 );
+                    // ctx.resetTransform();  
+                        
                     if ((cardBodyRef.current.offsetWidth + cardBodyRef.current.offsetHeight) < (image.naturalWidth + image.naturalHeight)) {
                         setScale((cardBodyRef.current.offsetWidth + cardBodyRef.current.offsetHeight) * 0.6 / (image.naturalWidth + image.naturalHeight));
                     } else {
                         setScale(1);
                     }
-
 
                     // if (cardBodyRef.current.offsetWidth < image.naturalWidth){
                     //     setScale(cardBodyRef.current.offsetWidth / image.naturalWidth)
@@ -86,38 +90,19 @@ const CanvasTest = () => {
                     console.log(
                         (cardBodyRef.current.offsetHeight / 2) - (image.naturalHeight / 2)
                     )
+        
+
                 });
             };
             image.src = event.target.result;
+
         };
         reader.readAsDataURL(event.target.files[0]);
     };
 
 
-    // const filterValue = () => {
 
-    //         const canvas = canvasRef.current;
-    //         const ctx = canvas.getContext('2d');
-    //         const currentImage = canvas.toDataURL();
-
-    //         const tempImage = new Image();
-    //         tempImage.src = currentImage;
-
-    //         tempImage.onload = () => {
-
-    //             ctx.filter = `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`;
-                
-    //             ctx.translate(canvas.width / 2, canvas.height / 2);
-    //             ctx.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
-    //             ctx.resetTransform();
-                
-    //         };
-
-    // }
-
-
-
-    useEffect(() => {
+        useEffect(() => {
     
             const canvas = canvasRef.current;
             const ctx = canvas.getContext('2d');
@@ -130,20 +115,20 @@ const CanvasTest = () => {
 
                 ctx.filter = `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`;
 
-            
-                
-
                 ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
+                // ctx.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
+                ctx.drawImage(tempImage, -tempImage.width / 2 , -tempImage.height/ 2 );
+            
+                // ctx.restore();
+
                 ctx.resetTransform();
 
-
                 
 
-                
             };
         
-        })
+        
+        },)
 
     
 
@@ -156,6 +141,7 @@ const CanvasTest = () => {
         const rect = canvasRef.current.getBoundingClientRect();
         const context = cropCanvasRef.current.getContext('2d');
         const multiple = (1 / scale);
+
 
         const startX = (nativeEvent.clientX - rect.x) * multiple;
         const startY = (nativeEvent.clientY - rect.y) * multiple;
@@ -174,6 +160,7 @@ const CanvasTest = () => {
         const onMouseMove = (e) => {
             reset();
             context.strokeStyle = 'red';
+            context.lineWidth = 1 * multiple;
 
             context.rect(
                 startX,
@@ -340,7 +327,6 @@ const CanvasTest = () => {
             tempImage.onload = () => resolve();
         });
 
-
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.save();
 
@@ -359,6 +345,7 @@ const CanvasTest = () => {
         context.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
         context.restore();
         context.resetTransform();
+
     }
 
 
@@ -372,8 +359,8 @@ const CanvasTest = () => {
         tempImage.src = currentImage;
 
 
-        // 이 처리는, 비동기 코드를 동기식으로 다시 바꿔버린거
-        // onload 가 실행될때 resolve 가 호출되는 promise 를 기다리겠다.
+        // 이 처리는, 비동기 코드를 동기식으로 다시 변경한 코드
+        // onload 가 실행될때 resolve 가 호출되는 promise 를 기다리는 코드.
         await new Promise(resolve => {
             tempImage.onload = () => resolve();
         });
@@ -388,30 +375,19 @@ const CanvasTest = () => {
         setWidth(newWidth);
         setHeight(newHeight);
 
-        // setTimeout 콜백함수가 실행될때 resolve 가 호출되는 promise 를 기다리겠다.
+        // setTimeout 콜백함수가 실행될때 resolve 가 호출되는 promise 를 기다리는 코드.
         await new Promise(resolve => {
             setTimeout(() => resolve());
         });
 
-        // save the unrotated context of the canvas so we can restore it later
-        // the alternative is to untranslate & unrotate after drawing
-
-        // move to the center of the canvas
         context.translate(canvas.width / 2, canvas.height / 2);
-
-        // rotate the canvas to the specified degrees
         context.rotate(90 * Math.PI / 180);
-
-        // draw the image
-        // since the context is rotated, the image will be rotated also
         context.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
-
-        // we’re done with the rotating so restore the unrotated context
         context.restore();
         context.resetTransform();
     }
 
-    // 밝은 - brightness ,어두운 - grayscale, 빛바랜 - sepia, 선명한 - saturate, 대비된 - contrast, 색전환 - hueRotate
+    
 
     return (
         <div>
@@ -439,7 +415,6 @@ const CanvasTest = () => {
                         scale: `${scale}`,
         
                     }}
-                    // onChange={filterValue}
                     alt="" />
 
 
@@ -450,10 +425,7 @@ const CanvasTest = () => {
                     height={height}
                     ref={cropCanvasRef}
                     style={{
-                        // transform: `rotate(${state.rotate}deg) scale(${state.vartical},${state.horizontal})`,
                         scale: `${scale}`
-                        // position: 'absolute',
-                        // top: `${canvasTop}px`,
                     }}
                     onMouseDown={(e) => startDrawingRectangle(e)}
                 // onMouseMove={drawRectangle}

@@ -27,25 +27,10 @@ let DefaultSetting = createSlice({   // useState() 역할 이걸 slice라고 부
             console.log(action);
             state.image = action.payload
         }
-        // leftRotateHandle(state, action) {
-        //     console.log(action);
-        //     state.rotate = action.payload
-        // },
-        // rightRotateHandle(state, action) {
-        //     console.log(action);
-
-        //     state.rotate = action.payload
-        // },
-        // varticalFlipHandle(state, action) {
-        //     state.vartical = action.payload
-        // },
-        // horizontalFlipHandle(state, action) {
-        //     state.horizontal = action.payload
-        // },
-
+        
     }
 })
-export let { slideHandle, urlHandle, leftRotateHandle, rightRotateHandle, varticalFlipHandle, horizontalFlipHandle } = DefaultSetting.actions
+export let { slideHandle, urlHandle } = DefaultSetting.actions
 
 let StartSet = createSlice({
     name: 'startState',
@@ -56,20 +41,10 @@ let StartSet = createSlice({
         blankStart(state, action) {
             state.name = action.payload.name;
             state.maxValue = action.payload.maxValue;
-
-            // console.log(action);
-            // console.log(state.name);
-            // console.log(state.maxValue);
-
         }
-
     }
 })
 export let { blankStart } = StartSet.actions
-
-
-
-
 
 //
 export default configureStore({
