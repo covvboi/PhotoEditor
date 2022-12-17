@@ -37,11 +37,12 @@ const CanvasTest = () => {
     let sepia = 
         `sepia(1)`;
 
+    const image = new Image();
 
 
     const ImageHandler = (event) => {
 
-        const image = new Image();
+        // const image = new Image();
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const reader = new FileReader();
@@ -54,10 +55,15 @@ const CanvasTest = () => {
         reader.onloadend = (event) => {
             
             image.onload = () => {
+
+
                 
                 setWidth(image.naturalWidth);
                 setHeight(image.naturalHeight);
                 setTimeout(() => {
+
+                    // ctx.filter = `brightness(${state.brightness}%)`
+
                     ctx.drawImage(
                         image,
                         0,
@@ -65,11 +71,13 @@ const CanvasTest = () => {
                         image.naturalWidth,
                         image.naturalHeight
                         );
+                    
                         
-                    // ctx.filter = sepia
+                    // ctx.filter = brightness
                     // ctx.translate(canvas.width / 2, canvas.height / 2);   
                     // ctx.drawImage(image, -image.width / 2 , -image.height/ 2 );
                     // ctx.resetTransform();  
+                    
                         
                     if ((cardBodyRef.current.offsetWidth + cardBodyRef.current.offsetHeight) < (image.naturalWidth + image.naturalHeight)) {
                         setScale((cardBodyRef.current.offsetWidth + cardBodyRef.current.offsetHeight) * 0.6 / (image.naturalWidth + image.naturalHeight));
@@ -77,22 +85,13 @@ const CanvasTest = () => {
                         setScale(1);
                     }
 
-                    // if (cardBodyRef.current.offsetWidth < image.naturalWidth){
-                    //     setScale(cardBodyRef.current.offsetWidth / image.naturalWidth)
-                    // } else if (cardBodyRef.current.offsetHeight < image.naturalHeight) {
-                    //     setScale(cardBodyRef.current.offsetHeight / image.naturalHeight)
-                    // } else {
-                    //     setScale(1)
-                    // }
-
                     setCanvasTop((cardBodyRef.current.offsetHeight / 2) - (image.naturalHeight / 2));
 
                     console.log(
                         (cardBodyRef.current.offsetHeight / 2) - (image.naturalHeight / 2)
                     )
-        
-
                 });
+                
             };
             image.src = event.target.result;
 
@@ -108,26 +107,17 @@ const CanvasTest = () => {
             const ctx = canvas.getContext('2d');
             const currentImage = canvas.toDataURL();
 
-            const tempImage = new Image();
-            tempImage.src = currentImage;
+            console.log(image)
+            // const tempImage = new Image();
+            image.src = currentImage;
 
-            tempImage.onload = () => {
-
-                ctx.filter = `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`;
-
-                ctx.translate(canvas.width / 2, canvas.height / 2);
-                // ctx.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
-                ctx.drawImage(tempImage, -tempImage.width / 2 , -tempImage.height/ 2 );
+            image.onload = () => {
             
-                // ctx.restore();
-
-                ctx.resetTransform();
-
-                
-
+                ctx.filter = `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`;
+                // ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.drawImage(image, -image.width / 2, -image.height / 2);
+                // ctx.resetTransform();
             };
-        
-        
         },)
 
     
