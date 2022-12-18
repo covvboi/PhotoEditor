@@ -2,6 +2,8 @@
 
 > PhotoEditor는 사용자가 사진의 기본적인 편집을 웹페이지에서 좀 더 편하게 작업할 수 있도록 만들었습니다.
 
+[사용하기](https://covvboi.github.io/PhotoEditor/)
+
 ## 제공된 기능🛠️
 
 ### 1. 사진 자르기 ✂️ 
@@ -59,7 +61,7 @@
 
 ##  1. 구현화면 💻
 
-[직접 구현하기](https://covvboi.github.io/PhotoEditor/)
+
 
 <img width="60%" src="https://user-images.githubusercontent.com/89898165/207321038-4304b2a5-d31f-44fa-a66c-09c64cdc0baf.gif"/>
 
