@@ -1,6 +1,22 @@
 #  Photo Editor
 
-> PhotoEditor는 라이브러리를 사용하지 않고 JavaScript와 HTML의 핵심 기능을 살려 구현해본 저의 Frontend 프로젝트입니다.
+> PhotoEditor는 사용자가 사진의 기본적인 편집을 웹페이지에서 좀 더 편하게 작업할 수 있도록 만들었습니다.
+
+## 제공된 기능🛠️
+### 1. 사진 자르기 ✂️ <br>
+ >아래사진과 같이 자르고싶은 범위를 설정해서 자를수 있습니다. 
+<img width="30%" align="left" alt="자르기 범위설정" src="https://user-images.githubusercontent.com/89898165/208283921-e84cf762-b6d1-436e-ad72-ee874762e26b.png"> 
+
+<img width="30%" align="center" alt="자르기 완료" src="https://user-images.githubusercontent.com/89898165/208283969-f55f4069-c152-4df9-98e2-df2b9565bb38.png"> 
+---------
+### 2. 이미지 회전 🔄 <br>
+> 사진고 같이 좌,우 방향중 원하는 방향을 사진을 회전시킬수 있습니다.
+<img width="30%" align="left" alt="오른쪽회전" src="https://user-images.githubusercontent.com/89898165/208284269-497fe926-2a26-42e4-a193-7847be16576e.png">
+
+<img width="30%" align="center" alt="왼쪽회전" src="https://user-images.githubusercontent.com/89898165/208284295-4bb82bd1-8e40-4d4b-9ece-a0efbc8d3117.png">
+- 이미지 좌우 및 상하 반전
+- 이미지 저장
+- 이미지 필터적용 
 
 ##  1. 구현화면 💻
 
