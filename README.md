@@ -78,7 +78,7 @@
 > 전반적으로 Canvas API를 기반으로 구현하였고, 이미지 관리에 많이 사용되는 외부 라이브러리를 최소화했으며, 그 이외 프레임워크는 React를 사용하였습니다.
 > 추가로 React의 상태 관리는 Redux-Toolkit을 사용하였으며, 크기가 다른 사진들도 모두 대응할 수 있게 로직을 작성하였습니다.
 
-##  4. 구현 기술설명
+##  4. 핵심기술 설명
 
 ### 1. Crop Funtion ✂️
 <img width="30%" src="https://user-images.githubusercontent.com/89898165/208039551-5229c0bf-3c63-4e86-962c-8f5542eb188b.jpeg"/>
