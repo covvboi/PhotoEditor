@@ -1,8 +1,7 @@
-// import { useEffect, useRef, useState } from 'react';
-import '../style/main.css'
 import { BsFilterLeft } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { slideHandle, blankStart  } from '../store.js';
+import { slideHandle, blankStart } from '../store.js';
+import '../style/main.css'
 
 
 
@@ -40,14 +39,7 @@ const FilterHeader = () => {
     let start = useSelector((start) => { return start.StartSet })
     let dispatch = useDispatch()
 
-    console.log(state);
-    console.log(state[start.name]);
-
-
-
     const inputHandle = (filter, e) => {
-        console.log(filter, e);
-
         dispatch(slideHandle(
             {
                 filterName: filter.name,
@@ -60,10 +52,10 @@ const FilterHeader = () => {
         <>
             <div className="filter_section">
                 <div className="filter_container">
-                <div className='filter_filter_span'>
-                <BsFilterLeft />
-                </div>
-                <span className='filter_filter_span'>Filter</span>
+                    <div className='filter_filter_span'>
+                        <BsFilterLeft />
+                    </div>
+                    <span className='filter_filter_span'>Filter</span>
                 </div>
 
                 <div className='filter_key'>
@@ -80,7 +72,7 @@ const FilterHeader = () => {
                     }
                 </div>
 
-            
+
             </div>
 
             <div className="filter_slider">

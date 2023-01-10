@@ -24,10 +24,9 @@ let DefaultSetting = createSlice({   // useState() 역할 이걸 slice라고 부
             state[action.payload.filterName] = action.payload.value;
         },
         urlHandle(state, action) {
-            console.log(action);
-            state.image = action.payload
+            state.image = action.payload.image;
         }
-        
+
     }
 })
 export let { slideHandle, urlHandle } = DefaultSetting.actions

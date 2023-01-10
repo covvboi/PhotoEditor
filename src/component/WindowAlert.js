@@ -27,7 +27,6 @@ function Alertwindow({ sizeAlert }){
         <div className="size_alert">
             <div className='size_alert_body'>
                 Photo Editor의 최적화를 위해 화면을 키워주세요 :)
-
             </div>
         </div>
     )

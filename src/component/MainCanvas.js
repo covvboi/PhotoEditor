@@ -4,94 +4,56 @@ import '../style/main.css'
 
 import { GrRotateLeft, GrRotateRight } from "react-icons/gr"
 import { CgMergeVertical, CgMergeHorizontal } from "react-icons/cg"
+import { urlHandle } from '../store.js';
+import { CanvasLayer } from './CanvasLayer';
 
-// var newMouseX, newMouseY
+const MainCanvas = () => {
 
-// const MAX_CANVAS_WIDTH = 410;
-// const MAX_CANVAS_HEIGHT = 400;
-
-const CanvasTest = () => {
-
-    /////////////////
-    const cropCanvasRef = useRef(null);
+    const canRef = useRef(null);
+    const cardBodyRef = useRef(null);
 
     const [scale, setScale] = useState(1);
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
-    const [canvasTop, setCanvasTop] = useState(0);
 
     let cropModel = null;
-
-    let state = useSelector((state) => { return state.DefaultSetting })
-
-    let dispatch = useDispatch()
-
-    const canvasRef = useRef(null);
-    const cardBodyRef = useRef(null);
-
-    
-    // brightness
-    let brightness = 
-        `brightness(${state.brightness}%)`;
-
-    let sepia = 
-        `sepia(1)`;
+    let state = useSelector((state) => { return state.DefaultSetting });
+    let dispatch = useDispatch();
 
     const image = new Image();
 
-
     const ImageHandler = (event) => {
-
-        // const image = new Image();
-        const canvas = canvasRef.current;
+        const canvas = canRef.current.canvasRef.current;
         const ctx = canvas.getContext('2d');
         const reader = new FileReader();
 
-
-        
-        
-
-        
         reader.onloadend = (event) => {
-            
             image.onload = () => {
-
-
-                
                 setWidth(image.naturalWidth);
                 setHeight(image.naturalHeight);
                 setTimeout(() => {
-
-                    // ctx.filter = `brightness(${state.brightness}%)`
-
                     ctx.drawImage(
                         image,
                         0,
                         0,
                         image.naturalWidth,
                         image.naturalHeight
-                        );
-                    
-                        
-                    // ctx.filter = brightness
-                    // ctx.translate(canvas.width / 2, canvas.height / 2);   
-                    // ctx.drawImage(image, -image.width / 2 , -image.height/ 2 );
-                    // ctx.resetTransform();  
-                    
-                        
+                    );
+
+                    dispatch(urlHandle(
+                        {
+                            image: event.target.result
+                        }
+                    ))
+
                     if ((cardBodyRef.current.offsetWidth + cardBodyRef.current.offsetHeight) < (image.naturalWidth + image.naturalHeight)) {
                         setScale((cardBodyRef.current.offsetWidth + cardBodyRef.current.offsetHeight) * 0.6 / (image.naturalWidth + image.naturalHeight));
                     } else {
                         setScale(1);
                     }
 
-                    setCanvasTop((cardBodyRef.current.offsetHeight / 2) - (image.naturalHeight / 2));
-
-                    console.log(
-                        (cardBodyRef.current.offsetHeight / 2) - (image.naturalHeight / 2)
-                    )
                 });
-                
+
             };
             image.src = event.target.result;
 
@@ -99,37 +61,21 @@ const CanvasTest = () => {
         reader.readAsDataURL(event.target.files[0]);
     };
 
+    useEffect(() => {
+        const canvas = canRef.current.canvasRef.current;
+        const currentImage = state.image;
+        const ctx = canvas.getContext('2d');
+        image.src = currentImage;
+        ctx.filter = `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`;
+        ctx.drawImage(image, 0, 0);
+    });
 
-
-        useEffect(() => {
-    
-            const canvas = canvasRef.current;
-            const ctx = canvas.getContext('2d');
-            const currentImage = canvas.toDataURL();
-
-            console.log(image)
-            // const tempImage = new Image();
-            image.src = currentImage;
-
-            image.onload = () => {
-            
-                ctx.filter = `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`;
-                // ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.drawImage(image, -image.width / 2, -image.height / 2);
-                // ctx.resetTransform();
-            };
-        },)
-
-    
-
-
-    ///////////
     const startDrawingRectangle = ({ nativeEvent }) => {
         nativeEvent.preventDefault();  //이벤트 기본동작을 막아준다. 
         nativeEvent.stopPropagation(); //이벤트 버블링 막아준다.
 
-        const rect = canvasRef.current.getBoundingClientRect();
-        const context = cropCanvasRef.current.getContext('2d');
+        const rect = canRef.current.canvasRef.current.getBoundingClientRect();
+        const context = canRef.current.cropCanvasRef.current.getContext('2d');
         const multiple = (1 / scale);
 
 
@@ -140,8 +86,8 @@ const CanvasTest = () => {
             context.clearRect(
                 0,
                 0,
-                cropCanvasRef.current.width,
-                cropCanvasRef.current.height
+                canRef.current.cropCanvasRef.current.width,
+                canRef.current.cropCanvasRef.current.height
             );
             context.beginPath();
         }
@@ -170,14 +116,14 @@ const CanvasTest = () => {
         };
 
         const onMouseUpOrLeave = (e) => {
-            cropCanvasRef.current.removeEventListener('mousemove', onMouseMove);
-            cropCanvasRef.current.removeEventListener('mouseup', onMouseUpOrLeave);
-            cropCanvasRef.current.removeEventListener('mouseleave', onMouseUpOrLeave);
+            canRef.current.cropCanvasRef.current.removeEventListener('mousemove', onMouseMove);
+            canRef.current.cropCanvasRef.current.removeEventListener('mouseup', onMouseUpOrLeave);
+            canRef.current.cropCanvasRef.current.removeEventListener('mouseleave', onMouseUpOrLeave);
         }
 
-        cropCanvasRef.current.addEventListener('mousemove', onMouseMove);
-        cropCanvasRef.current.addEventListener('mouseup', onMouseUpOrLeave);
-        cropCanvasRef.current.addEventListener('mouseleave', onMouseUpOrLeave);
+        canRef.current.cropCanvasRef.current.addEventListener('mousemove', onMouseMove);
+        canRef.current.cropCanvasRef.current.addEventListener('mouseup', onMouseUpOrLeave);
+        canRef.current.cropCanvasRef.current.addEventListener('mouseleave', onMouseUpOrLeave);
 
     };
 
@@ -186,7 +132,7 @@ const CanvasTest = () => {
             return;
         }
 
-        const canvas = canvasRef.current;
+        const canvas = canRef.current.canvasRef.current;
         const context = canvas.getContext('2d');
         const currentImage = canvas.toDataURL();
 
@@ -204,8 +150,8 @@ const CanvasTest = () => {
             context.clearRect(
                 0,
                 0,
-                cropCanvasRef.current.width,
-                cropCanvasRef.current.height
+                canRef.current.cropCanvasRef.current.width,
+                canRef.current.cropCanvasRef.current.height
             );
             context.beginPath();
         }
@@ -234,25 +180,24 @@ const CanvasTest = () => {
 
     const saveImage = () => {
 
-        const canvas = canvasRef.current;
+        const canvas = canRef.current.canvasRef.current;
         const ctx = canvas.getContext('2d');
+
         ctx.resetTransform();
         ctx.restore();
+
+
 
         const link = document.createElement('a');
         link.download = 'image_edit.jpg';
         link.href = canvas.toDataURL();
         link.click();
 
-        console.log(state);
-        console.log(link);
-
-
     }
 
 
     const rotateVertical = async () => {
-        const canvas = canvasRef.current;
+        const canvas = canRef.current.canvasRef.current;
         const context = canvas.getContext('2d');
         const currentImage = canvas.toDataURL();
 
@@ -279,7 +224,7 @@ const CanvasTest = () => {
 
 
     const rotateHorizontal = async () => {
-        const canvas = canvasRef.current;
+        const canvas = canRef.current.canvasRef.current;
         const context = canvas.getContext('2d');
         const currentImage = canvas.toDataURL();
 
@@ -306,7 +251,7 @@ const CanvasTest = () => {
 
 
     const rotateleft = async () => {
-        const canvas = canvasRef.current;
+        const canvas = canRef.current.canvasRef.current;
         const context = canvas.getContext('2d');
         const currentImage = canvas.toDataURL();
 
@@ -341,7 +286,7 @@ const CanvasTest = () => {
 
 
     const rotateRight = async () => {
-        const canvas = canvasRef.current;
+        const canvas = canRef.current.canvasRef.current;
         const context = canvas.getContext('2d');
         const currentImage = canvas.toDataURL();
 
@@ -377,7 +322,7 @@ const CanvasTest = () => {
         context.resetTransform();
     }
 
-    
+
 
     return (
         <div>
@@ -395,22 +340,24 @@ const CanvasTest = () => {
 
             <div className='card_body' ref={cardBodyRef} style={{ position: 'relative' }}>
 
-                <canvas className='canvas'
+                <CanvasLayer
+                    ref={canRef}
+                    width={width}
+                    height={height}
+                    scale={scale}
+                    onMousedown={(e) => startDrawingRectangle(e)}>
+                </CanvasLayer>
+
+                {/* <canvas className='canvas'
                     ref={canvasRef}
                     width={width}
                     height={height}
                     style={{
-                        // filter: `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`,
-                        // transform: `rotate(${state.rotate}deg) scale(${state.vartical},${state.horizontal})`,
                         scale: `${scale}`,
-        
                     }}
                     alt="" />
 
-
-
-
-                <canvas className="test_crop_canvas"
+                <canvas className="crop_canvas"
                     width={width}
                     height={height}
                     ref={cropCanvasRef}
@@ -418,10 +365,7 @@ const CanvasTest = () => {
                         scale: `${scale}`
                     }}
                     onMouseDown={(e) => startDrawingRectangle(e)}
-                // onMouseMove={drawRectangle}
-                // onMouseUp={stopDrawingRectangle}
-                // onMouseLeave={stopDrawingRectangle}  // 이런식으로 이벤트 처리하지말자 
-                />
+                /> */}
 
             </div>
 
@@ -448,4 +392,4 @@ const CanvasTest = () => {
 
 }
 
-export default CanvasTest;
+export default MainCanvas;
