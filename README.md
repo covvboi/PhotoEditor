@@ -63,7 +63,7 @@
 
 
 
-<img width="60%" src="https://user-images.githubusercontent.com/89898165/207321038-4304b2a5-d31f-44fa-a66c-09c64cdc0baf.gif"/>
+<img width="60%" src="https://user-images.githubusercontent.com/89898165/211559827-8717c83c-6750-4f1a-9a94-6afe9a5b6d42.gif"/>
 
 ##  2. 사용기술 🚀
 - HTML
