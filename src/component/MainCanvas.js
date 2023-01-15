@@ -4,10 +4,13 @@ import '../style/main.css'
 
 import { GrRotateLeft, GrRotateRight } from "react-icons/gr"
 import { CgMergeVertical, CgMergeHorizontal } from "react-icons/cg"
-import { urlHandle } from '../store.js';
+import { updateState } from '../store.js';
 import { CanvasLayer } from './CanvasLayer';
+import { useLayoutEffect } from 'react';
 
 const MainCanvas = () => {
+    const dispatch = useDispatch();
+    const state = useSelector((state) => { return state.DefaultSetting });
 
     const canRef = useRef(null);
     const cardBodyRef = useRef(null);
@@ -15,17 +18,112 @@ const MainCanvas = () => {
     const [scale, setScale] = useState(1);
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
+    const shouldSwapWidthHeight = Math.abs(state.rotate) % 180 > 0;
 
     let cropModel = null;
-    let state = useSelector((state) => { return state.DefaultSetting });
-    let dispatch = useDispatch();
 
-    const image = new Image();
+    const [rotatedImageUrl, setRotatedImageUrl] = useState(state.image);
+    const [filterAppliedImageUrl, setFilterAppliedImageUrl] = useState(state.image);
 
-    const ImageHandler = (event) => {
+    // 원본 이미지 필요하고
+    // 원본 이미지에서 로테이션만 적용된 이미지
+    // 로테이션과 필터까지 적용된 이미지
+
+    // rotate effect
+    useLayoutEffect(() => {
+        if (!state.image) {
+            return;
+        }
+        const image = new Image();
+        const canvas = document.createElement('canvas');
+        const newWidth = shouldSwapWidthHeight ? height : width;
+        const newHeight = shouldSwapWidthHeight ? width : height;
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        const context = canvas.getContext('2d');
+        image.src = state.image;
+        image.onload = () => {
+            context.clearRect(0, 0, newWidth, newHeight);
+            context.save();
+            setTimeout(() => {
+                context.translate(canvas.width / 2, canvas.height / 2);
+                if (state.flip) {
+                    context.scale(1, -1);
+                }
+                // q
+                context.rotate(state.rotate * Math.PI / 180);
+                context.drawImage(image, -image.width / 2, -image.height / 2);
+                context.restore();
+                context.resetTransform();
+                const url = canvas.toDataURL();
+                setRotatedImageUrl(url);
+            }, 0);
+        }
+    }, [
+        state.image,
+        state.rotate,
+        state.flip,
+        shouldSwapWidthHeight,
+        width,
+        height,
+    ]);
+
+    useEffect(() => {
+        if (!rotatedImageUrl) {
+            return;
+        }
+        const canvas = document.createElement('canvas');
+        const newWidth = shouldSwapWidthHeight ? height : width;
+        const newHeight = shouldSwapWidthHeight ? width : height;
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+        const context = canvas.getContext('2d');
+
+        const image = new Image();
+        image.src = rotatedImageUrl;
+        image.onload = () => {
+            context.filter = `
+                brightness(${state.brightness}%) 
+                grayscale(${state.grayscale}%) 
+                sepia(${state.sepia}%)
+                saturate(${state.saturate}%)
+                contrast(${state.contrast}%) 
+                hue-rotate(${state.huerotate}deg)
+            `;
+            context.drawImage(image, 0, 0);
+            setFilterAppliedImageUrl(canvas.toDataURL());
+        }
+    }, [
+        rotatedImageUrl,
+        width,
+        height,
+        shouldSwapWidthHeight,
+        state.brightness,
+        state.grayscale,
+        state.saturate,
+        state.contrast,
+        state.huerotate,
+        state.sepia
+    ]);
+
+    useEffect(() => {
+        if (!filterAppliedImageUrl) {
+            return;
+        }
+        const canvas = canRef.current.canvasRef.current;
+        const context = canvas.getContext('2d');
+        const image = new Image();
+        image.src = filterAppliedImageUrl;
+        image.onload = () => {
+            context.drawImage(image, 0, 0);
+        }
+    }, [filterAppliedImageUrl])
+
+    const onImageUploaded = (event) => {
         const canvas = canRef.current.canvasRef.current;
         const ctx = canvas.getContext('2d');
         const reader = new FileReader();
+        const image = new Image();
 
         reader.onloadend = (event) => {
             image.onload = () => {
@@ -40,7 +138,7 @@ const MainCanvas = () => {
                         image.naturalHeight
                     );
 
-                    dispatch(urlHandle(
+                    dispatch(updateState(
                         {
                             image: event.target.result
                         }
@@ -61,15 +159,6 @@ const MainCanvas = () => {
         reader.readAsDataURL(event.target.files[0]);
     };
 
-    useEffect(() => {
-        const canvas = canRef.current.canvasRef.current;
-        const currentImage = state.image;
-        const ctx = canvas.getContext('2d');
-        image.src = currentImage;
-        ctx.filter = `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.huerotate}deg)`;
-        ctx.drawImage(image, 0, 0);
-    });
-
     const startDrawingRectangle = ({ nativeEvent }) => {
         nativeEvent.preventDefault();  //이벤트 기본동작을 막아준다. 
         nativeEvent.stopPropagation(); //이벤트 버블링 막아준다.
@@ -77,7 +166,6 @@ const MainCanvas = () => {
         const rect = canRef.current.canvasRef.current.getBoundingClientRect();
         const context = canRef.current.cropCanvasRef.current.getContext('2d');
         const multiple = (1 / scale);
-
 
         const startX = (nativeEvent.clientX - rect.x) * multiple;
         const startY = (nativeEvent.clientY - rect.y) * multiple;
@@ -132,9 +220,9 @@ const MainCanvas = () => {
             return;
         }
 
-        const canvas = canRef.current.canvasRef.current;
+        const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
-        const currentImage = canvas.toDataURL();
+        const currentImage = rotatedImageUrl;
 
         const image = await new Promise((resolve) => {
             const tempImage = new Image();
@@ -142,7 +230,6 @@ const MainCanvas = () => {
             tempImage.onload = () => {
                 resolve(tempImage);
             }
-
         });
 
 
@@ -157,8 +244,8 @@ const MainCanvas = () => {
         }
         reset();
 
-        setWidth(cropModel.width);
-        setHeight(cropModel.height);
+        canvas.width = cropModel.width;
+        canvas.height = cropModel.height;
 
         await new Promise((resolve) => {
             setTimeout(() => resolve(), 0);
@@ -176,150 +263,66 @@ const MainCanvas = () => {
             cropModel.height,
         );
 
+        setWidth(cropModel.width);
+        setHeight(cropModel.height);
+        dispatch(updateState(
+            {
+                image: canvas.toDataURL(),
+                rotate: 0,
+                flip: false,
+            },
+        ));
     }
 
     const saveImage = () => {
-
         const canvas = canRef.current.canvasRef.current;
         const ctx = canvas.getContext('2d');
 
         ctx.resetTransform();
         ctx.restore();
 
-
-
         const link = document.createElement('a');
         link.download = 'image_edit.jpg';
         link.href = canvas.toDataURL();
         link.click();
-
     }
 
 
     const rotateVertical = async () => {
-        const canvas = canRef.current.canvasRef.current;
-        const context = canvas.getContext('2d');
-        const currentImage = canvas.toDataURL();
-
-        const tempImage = new Image();
-        tempImage.src = currentImage;
-
-        await new Promise(resolve => {
-            tempImage.onload = () => resolve();
-        });
-
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        await new Promise(resolve => {
-            setTimeout(() => resolve());
-        });
-
-        context.translate(canvas.width / 2, canvas.height / 2);
-        context.scale(-1, 1)
-        context.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
-        context.restore();
-        context.resetTransform();
-
+        dispatch(updateState(
+            {
+                rotate: state.rotate + 180,
+                flip: !state.flip,
+            },
+        ));
     }
 
 
     const rotateHorizontal = async () => {
-        const canvas = canRef.current.canvasRef.current;
-        const context = canvas.getContext('2d');
-        const currentImage = canvas.toDataURL();
-
-        const tempImage = new Image();
-        tempImage.src = currentImage;
-
-        await new Promise(resolve => {
-            tempImage.onload = () => resolve();
-        });
-
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        await new Promise(resolve => {
-            setTimeout(() => resolve());
-        });
-
-        context.translate(canvas.width / 2, canvas.height / 2);
-        context.scale(1, -1)
-        context.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
-        context.restore();
-        context.resetTransform();
-
+        dispatch(updateState(
+            {
+                flip: !state.flip,
+            },
+        ));
     }
 
 
     const rotateleft = async () => {
-        const canvas = canRef.current.canvasRef.current;
-        const context = canvas.getContext('2d');
-        const currentImage = canvas.toDataURL();
-
-        const tempImage = new Image();
-        tempImage.src = currentImage;
-
-        await new Promise(resolve => {
-            tempImage.onload = () => resolve();
-        });
-
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.save();
-
-        const newHeight = width;
-        const newWidth = height;
-
-        setWidth(newWidth);
-        setHeight(newHeight);
-
-        await new Promise(resolve => {
-            setTimeout(() => resolve());
-        });
-
-        context.translate(canvas.width / 2, canvas.height / 2);
-        context.rotate(-90 * Math.PI / 180);
-        context.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
-        context.restore();
-        context.resetTransform();
-
+        dispatch(updateState(
+            {
+                rotate: state.rotate - 90,
+            },
+        ));
     }
 
 
 
     const rotateRight = async () => {
-        const canvas = canRef.current.canvasRef.current;
-        const context = canvas.getContext('2d');
-        const currentImage = canvas.toDataURL();
-
-        const tempImage = new Image();
-        tempImage.src = currentImage;
-
-
-        // 이 처리는, 비동기 코드를 동기식으로 다시 변경한 코드
-        // onload 가 실행될때 resolve 가 호출되는 promise 를 기다리는 코드.
-        await new Promise(resolve => {
-            tempImage.onload = () => resolve();
-        });
-
-        context.clearRect(0, 0, canvas.width, canvas.height);
-
-        context.save();
-
-        const newHeight = width;
-        const newWidth = height;
-
-        setWidth(newWidth);
-        setHeight(newHeight);
-
-        // setTimeout 콜백함수가 실행될때 resolve 가 호출되는 promise 를 기다리는 코드.
-        await new Promise(resolve => {
-            setTimeout(() => resolve());
-        });
-
-        context.translate(canvas.width / 2, canvas.height / 2);
-        context.rotate(90 * Math.PI / 180);
-        context.drawImage(tempImage, -tempImage.width / 2, -tempImage.height / 2);
-        context.restore();
-        context.resetTransform();
+        dispatch(updateState(
+            {
+                rotate: state.rotate + 90,
+            },
+        ));
     }
 
 
@@ -342,8 +345,8 @@ const MainCanvas = () => {
 
                 <CanvasLayer
                     ref={canRef}
-                    width={width}
-                    height={height}
+                    width={shouldSwapWidthHeight ? height : width}
+                    height={shouldSwapWidthHeight ? width : height}
                     scale={scale}
                     onMousedown={(e) => startDrawingRectangle(e)}>
                 </CanvasLayer>
@@ -378,7 +381,7 @@ const MainCanvas = () => {
                         </span>
                 </label>
 
-                <input className='import_btn' type="file" id='choose' onChange={ImageHandler}></input>
+                <input className='import_btn' type="file" id='choose' onChange={onImageUploaded}></input>
 
                 <input type='button' className='crop_btn' value='Crop' onClick={imageCrop}></input>
 

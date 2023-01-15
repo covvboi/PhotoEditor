@@ -1,6 +1,6 @@
 import { BsFilterLeft } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { slideHandle, blankStart } from '../store.js';
+import { updateState, blankStart } from '../store.js';
 import '../style/main.css'
 
 
@@ -40,10 +40,9 @@ const FilterHeader = () => {
     let dispatch = useDispatch()
 
     const inputHandle = (filter, e) => {
-        dispatch(slideHandle(
+        dispatch(updateState(
             {
-                filterName: filter.name,
-                value: e.target.value
+                [filter.name]: e.target.value
             }
         ))
     }

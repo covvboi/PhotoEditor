@@ -2,6 +2,17 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 // 밝은 - brightness ,어두운 - grayscale, 빛바랜 - sepia, 선명한 - seturate, 대비된 - contrate, 색전환 - hueRotate
 
+// const a = 3; // primitive type
+// let b = 'asdf'; // primitive type
+// const c = b;
+// b = 'df';
+// console.log(b, c);
+
+// const person1 = { age: 30 }; // object type
+// const person2 = person1;
+// person1.age = 20;
+
+// console.log(person1, person2);
 
 let DefaultSetting = createSlice({   // useState() 역할 이걸 slice라고 부름
     name: 'defaultState',
@@ -15,21 +26,19 @@ let DefaultSetting = createSlice({   // useState() 역할 이걸 slice라고 부
         contrast: 100,
         huerotate: 0,
         rotate: 0,
-        vartical: 1,
-        horizontal: 1
+        flip: false,
     },
-
     reducers: {  //state 변경함수
-        slideHandle(state, action) {
-            state[action.payload.filterName] = action.payload.value;
+        updateState(state, action) {
+            const newstate = {
+                ...state,
+                ...action.payload
+            };
+            return newstate;
         },
-        urlHandle(state, action) {
-            state.image = action.payload.image;
-        }
-
     }
 })
-export let { slideHandle, urlHandle } = DefaultSetting.actions
+export let { updateState, urlHandle } = DefaultSetting.actions
 
 let StartSet = createSlice({
     name: 'startState',
