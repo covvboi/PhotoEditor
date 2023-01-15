@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateState, blankStart } from '../store.js';
 import '../style/main.css'
 
-
-
 const filterElement = [
     {
         name: 'brightness',  //brightness
@@ -30,8 +28,6 @@ const filterElement = [
         name: 'huerotate'  //hueRotate
     }
 ];
-
-
 
 const FilterHeader = () => {
 

@@ -25,11 +25,6 @@ const MainCanvas = () => {
     const [rotatedImageUrl, setRotatedImageUrl] = useState(state.image);
     const [filterAppliedImageUrl, setFilterAppliedImageUrl] = useState(state.image);
 
-    // 원본 이미지 필요하고
-    // 원본 이미지에서 로테이션만 적용된 이미지
-    // 로테이션과 필터까지 적용된 이미지
-
-    // rotate effect
     useLayoutEffect(() => {
         if (!state.image) {
             return;
@@ -50,7 +45,6 @@ const MainCanvas = () => {
                 if (state.flip) {
                     context.scale(1, -1);
                 }
-                // q
                 context.rotate(state.rotate * Math.PI / 180);
                 context.drawImage(image, -image.width / 2, -image.height / 2);
                 context.restore();
@@ -160,8 +154,8 @@ const MainCanvas = () => {
     };
 
     const startDrawingRectangle = ({ nativeEvent }) => {
-        nativeEvent.preventDefault();  //이벤트 기본동작을 막아준다. 
-        nativeEvent.stopPropagation(); //이벤트 버블링 막아준다.
+        nativeEvent.preventDefault();  
+        nativeEvent.stopPropagation(); 
 
         const rect = canRef.current.canvasRef.current.getBoundingClientRect();
         const context = canRef.current.cropCanvasRef.current.getContext('2d');
@@ -350,25 +344,6 @@ const MainCanvas = () => {
                     scale={scale}
                     onMousedown={(e) => startDrawingRectangle(e)}>
                 </CanvasLayer>
-
-                {/* <canvas className='canvas'
-                    ref={canvasRef}
-                    width={width}
-                    height={height}
-                    style={{
-                        scale: `${scale}`,
-                    }}
-                    alt="" />
-
-                <canvas className="crop_canvas"
-                    width={width}
-                    height={height}
-                    ref={cropCanvasRef}
-                    style={{
-                        scale: `${scale}`
-                    }}
-                    onMouseDown={(e) => startDrawingRectangle(e)}
-                /> */}
 
             </div>
 

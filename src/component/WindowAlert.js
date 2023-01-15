@@ -6,7 +6,7 @@ const WindowAlert = () => {
     const [sizeAlert, setSizeAlert] = useState(false);
 
     window.addEventListener('resize', function(){
-        // console.log('resize envet!');
+    
         if(window.innerWidth <= 650){
             setSizeAlert(true)
         }else{
