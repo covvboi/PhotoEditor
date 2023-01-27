@@ -2,7 +2,7 @@
 
 > PhotoEditor는 사용자가 사진의 기본적인 편집을 웹페이지에서 좀 더 편하게 작업할 수 있도록 만들었습니다.
 
-> chrome으로 권장합니다
+> Chrome으로 권장합니다.
 
 [사용하기](https://covvboi.github.io/PhotoEditor/)
 
